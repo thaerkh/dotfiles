@@ -24,6 +24,7 @@ alias gc='gcc -Wall -O0 -o'
 #
 alias ga='git add'
 alias gr='git rm'
+alias grd='gr $(git ls-files --deleted)'
 alias gv='git mv'
 alias gt='git commit'
 alias gca='git commit -a'

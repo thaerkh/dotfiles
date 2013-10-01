@@ -49,8 +49,8 @@ map <F3> :Tlist<CR>
 map <F4> :set number!<CR>
 map <F5> :call ReIndent()<CR>
 map <F6> :set hlsearch!<CR>
-"map <F7>
-"map <F8>
+map <F7> :mksession! s.vim<CR>
+map <F8> :%s/\s\+$//<CR>
 "map <F9>
 "map <F10>
 map <F12> :tabnew $MYVIMRC<CR>
