@@ -20,6 +20,9 @@ au FileType asm setl ts=8 sts=8 sw=8 smartindent
 " Command Shortcuts
 " =================
 
+" get rid of Ex mode
+nnoremap Q <nop>
+
 " quick command shortcuts
 noremap ; :
 noremap ;; ;
@@ -48,11 +51,11 @@ map <F2> :set wrap!<CR>
 map <F3> :Tlist<CR>
 map <F4> :set number!<CR>
 map <F5> :call ReIndent()<CR>
-map <F6> :set hlsearch!<CR>
-map <F7> :mksession! s.vim<CR>
-map <F8> :%s/\s\+$//<CR>
-"map <F9>
-"map <F10>
+map <F6> :call RemWhiteSpace()<CR>
+"map <F7>
+"map <F8>
+map <F9> :set hlsearch!<CR>
+map <F10> :mksession! s.vim<CR>
 map <F12> :tabnew $MYVIMRC<CR>
 
 " mapleader shortcuts
@@ -72,7 +75,19 @@ augroup END
 function! ReIndent()
   let curr_line = line('.')
   execute "normal gg=G"
-  execute "normal " + curr_line + "gg"
+  call ReturnToLine(curr_line)
+endfunction
+
+" remove trailing whitespace and return to current line
+function! RemWhiteSpace()
+  let curr_line = line('.')
+  :%s/\s\+$//
+  call ReturnToLine(curr_line)
+endfunction
+
+" returns to given line - ReIndent and RemWhiteSpace helper
+function! ReturnToLine(curr_line)
+  execute "normal " + a:curr_line + "gg"
   execute "normal zz"
 endfunction
 
