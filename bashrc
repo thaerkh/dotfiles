@@ -1,7 +1,6 @@
-#
 # ~/.bashrc
 #
-#
+
 export EDITOR="vim"
 export TERM=gnome-256color
 archey3
@@ -13,26 +12,23 @@ alias ls='ls -FC --color=auto'
 alias la='ls -aFC --color=auto'
 PS1='[\u@\h \W]\$ '
 
-
-# Compiler Shortcuts
-#
-alias g+='g++ -Wall -O0 -o'
-alias gc='gcc -Wall -O0 -o'
-
-
 # git
 #
-alias ga='git add'
-alias gr='git rm'
-alias grd='gr $(git ls-files --deleted)'
-alias gv='git mv'
-alias gt='git commit'
-alias gca='git commit -a'
+alias pull='git pull'
+alias push='git push'
+alias log='git log --graph --decorate --all'
+alias ga='git add -A'
 alias gcm='git commit -m'
+alias gca='git commit --amend -m'
 alias gco='git checkout'
-alias gpush='git push origin master'
-alias gpull='git pull origin master'
+alias gst='git status'
+alias gri='git rebase -i'
+alias gsf='git diff-tree --no-commit-id --name-only -r'
+alias gdif='git diff'
+alias gbr='git branch' 
 
+alias be='bundle exec'
+alias redis='redis-server /usr/local/etc/redis.conf'
 
 # Arch Linux aliases
 #
