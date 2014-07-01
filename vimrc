@@ -55,17 +55,17 @@ imap ;, <Esc>
 " =================
 
 function! ReIndent()
-  let row = line('.')
-  let col = virtcol('.')
+  let curr_row = line('.')
+  let curr_col = virtcol('.')
   execute "normal gg=G"
-  cal cursor(row, col)
+  cal cursor(curr_row, curr_col)
   execute "normal zz"
 endfunction
 
 function! RemTrailingSpaces()
-  let row = line('.')
-  let col = virtcol('.')
+  let curr_row = line('.')
+  let curr_col = virtcol('.')
   :%s/\s\+$//e
-  cal cursor(row, col)
+  cal cursor(curr_row, curr_col)
   execute "normal zz"
 endfunction

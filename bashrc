@@ -3,7 +3,8 @@
 
 export EDITOR="vim"
 export TERM=gnome-256color
-archey3
+alias emacs='emacs -nw'
+alias vi='vim'
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
