@@ -1,3 +1,5 @@
+" ~/.vimrc
+
 " Settings
 " =================
 
@@ -29,27 +31,6 @@ noremap <F5> :NERDTreeToggle<CR>
 noremap <F6> :set hlsearch!<CR>
 noremap <F7> :call ReIndent()<CR>
 noremap <F8> :call RemTrailingSpaces()<CR>
-noremap <F9> <nop>
-noremap <F10> <nop>
-noremap <F11> :mksession! sess.swp<CR>
-noremap <F12> :tabnew $MYVIMRC<CR>
-
-nmap <Up> <C-w>k
-nmap <Down> <C-w>j
-nmap <Left> <C-w>h
-nmap <Right> <C-w>l
-
-vmap <Up> <C-w>+
-vmap <Down> <C-w>-
-vmap <Left> <C-w><
-vmap <Right> <C-w>>
-
-let mapleader = " "
-map <leader>w <C-w>w
-
-noremap ; :
-noremap \ ;
-imap ;, <Esc>
 
 " Scripts
 " =================

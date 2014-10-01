@@ -1,20 +1,29 @@
 # ~/.bashrc
-#
+
+[[ $- != *i* ]] && return
+
+# General
+# =================
 
 export EDITOR="vim"
 export TERM=gnome-256color
 alias emacs='emacs -nw'
 alias vi='vim'
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
 alias ls='ls -FC --color=auto'
 alias la='ls -aFC --color=auto'
-PS1='[\u@\h \W]\$ '
+alias ll='ls -aFl --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
-# git
-#
+complete -d cd
+HISTCONTROL=ignoredups:ignorespace
+PS1='[\u@\h \W]\$ '
+HISTSIZE=10000;HISTFILESIZE=20000
+
+# Dev
+# =================
+
 alias pull='git pull'
 alias push='git push'
 alias log='git log --graph --decorate --all'
@@ -24,41 +33,31 @@ alias gca='git commit --amend -m'
 alias gco='git checkout'
 alias gst='git status'
 alias gri='git rebase -i'
+alias grl='ga;gcm "dummy commit";gri HEAD~~'
 alias gsf='git diff-tree --no-commit-id --name-only -r'
 alias gdif='git diff'
-alias gbr='git branch' 
+alias gbr='git branch'
 
 alias be='bundle exec'
 alias redis='redis-server /usr/local/etc/redis.conf'
 
-# Arch Linux aliases
-#
+# Arch Linux
+# =================
 
-# pacman aliases
 alias pacupg='sudo pacman -Syu'
 alias pacin='sudo pacman -S'
-alias pacins='sudo pacman -U'   # Install specific package from a file
-alias pacre='sudo pacman -R'    # Retain removed package configs/dependencies
-alias pacrem='sudo pacman -Rns' # Remove packages & their dependencies
-alias pacrep='pacman auto -Si'  # Display information about a given package 
-alias pacreps='pacman auto -Ss' # Search for a package
-alias pacloc='pacman auto -Qi'  # Display information about a local package 
-alias paclocs='pacman auto -Qs' # Search for package(s) in the local database
-alias pacqdt='sudo pacman -Rns $(pacman -Qdtq)' # Clean up dependencies
-alias pacach='sudo pacman -Sc'	# Clean up cache but keep local package cache
-alias paccch='sudo pacman -Scc'	# Clean up all cache and unused repos
+alias pacrem='sudo pacman -Rns'
+alias pacqdt='sudo pacman -Rns $(pacman -Qdtq)'
+alias pacch='sudo pacman -Scc'
 
-# yaourt aliases
 alias yaoupg='yaourt -Syua'
 alias yaoin='yaourt -S'
 alias yaore='yaourt -R'
 alias yaorem='yaourt -Rns'
 
-# ecryptfs commands
-alias emount='ecryptfs-mount-private' 
+alias emount='ecryptfs-mount-private'
 alias eumount='ecryptfs-umount-private'
 
 alias poweroff='systemctl poweroff'
 
-# redshift alias for vancouver setting
 alias redvan='redshift -l 49.27:-123.10 -t 6500:3600 -g 0.8 -m vidmode -v'
