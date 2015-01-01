@@ -3,10 +3,11 @@
 " Settings
 " =================
 
+set encoding=utf-8
 set nocompatible t_Co=256
-set textwidth=0 wrap linebreak
+set list nowrap linebreak
+set ts=2 sts=2 sw=2 et tw=0
 set autoindent smartcase cursorline
-set ts=2 sts=2 sw=2 et encoding=utf-8
 set number ruler incsearch hidden
 filetype plugin indent on
 colorscheme jellybeans
