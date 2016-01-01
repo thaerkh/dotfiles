@@ -15,11 +15,14 @@ alias ll='ls -aFl --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+alias parallel='parallel --no-notice'
+alias ts='date +%Y%m%d%H%M%S'
 
 complete -d cd
-HISTCONTROL=ignoredups:ignorespace
 PS1='[\u@\h \W]\$ '
-HISTSIZE=10000;HISTFILESIZE=20000
+HISTSIZE=10000
+HISTFILESIZE=20000
+HISTCONTROL=ignoredups:ignorespace
 
 # Dev
 # =================
@@ -58,6 +61,14 @@ alias yaorem='yaourt -Rns'
 alias emount='ecryptfs-mount-private'
 alias eumount='ecryptfs-umount-private'
 
-alias poweroff='systemctl poweroff'
+alias poweroff='systemctl poweroff -i'
 
 alias redvan='redshift -l 49.27:-123.10 -t 6500:3600 -g 0.8 -m vidmode -v'
+
+# Functions
+# =================
+
+function hawkargs {
+	head -1 $2 | awk -F "$1" '{for(i = 1; i <= NF; i++) printf(" -v " $i "=" i)}'
+}
+alias ha='hawkargs'

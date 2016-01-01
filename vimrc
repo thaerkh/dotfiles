@@ -3,12 +3,22 @@
 " Settings
 " =================
 
+set autoindent
+set cursorline
 set encoding=utf-8
-set nocompatible t_Co=256
-set list nowrap linebreak
-set ts=2 sts=2 sw=2 et tw=0
-set autoindent smartcase cursorline
-set number ruler incsearch hidden
+set noexpandtab
+set hidden
+set incsearch
+set linebreak
+set list
+set nocompatible
+set number
+set ruler
+set sw=2 sts=2 ts=2
+set t_Co=256
+set textwidth=0
+set wrap
+
 filetype plugin indent on
 colorscheme jellybeans
 syntax on
@@ -16,10 +26,10 @@ syntax on
 " Autocommands
 " =================
 
-au FileType make setl noet
+let g:tex_flavor='latex'
 au FileType c,cpp setl cinkeys-=0# cino=:g0
-au FileType python setl ts=4 sts=4 sw=4
-au FileType asm setl ts=8 sts=8 sw=8 smartindent
+au FileType python setl ts=4 sts=4 sw=4 et
+au FileType asm setl ts=8 sts=8 sw=8
 
 " Mappings
 " =================
