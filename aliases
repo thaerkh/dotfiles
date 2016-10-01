@@ -1,0 +1,9 @@
+# ~/.aliases
+
+alias vi='vim'
+alias ts='date +%Y%m%d%H%M%S'
+alias grbl='gaa && git commit -m "dummy commit" && grbi HEAD~~'
+
+awkfields() {
+  head -1 $2 | awk -F "$1" '{for(i = 1; i <= NF; i++) printf(" -v " $i "=" i)}'
+}

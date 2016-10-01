@@ -1,0 +1,11 @@
+[MASTER]
+ignore=.git
+persistent=yes
+jobs=2
+unsafe-load-any-extension=no
+
+[MESSAGES CONTROL]
+disable=missing-docstring,too-few-public-methods,logging-format-interpolation,invalid-name,superfluous-parens
+
+[FORMAT]
+max-line-length=120
