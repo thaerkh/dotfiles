@@ -8,8 +8,15 @@ ZLE_REMOVE_SUFFIX_CHARS=""
 export EDITOR='vim'
 export FZF_DEFAULT_COMMAND='ag -g ""'
 
+export PYTHONPATH=$(cat ~/.python_paths 2>/dev/null | xargs -i echo -n :{})
+export CLASSPATH="target/dependency/*:src/main/java/"
+
+export GOPATH=~/.go
+export PATH="$PATH:$GOPATH/bin"
+
 bindkey -e
 bindkey \^U backward-kill-line
+disable r
 
 source ~/.antigen/antigen.zsh
 antigen use oh-my-zsh

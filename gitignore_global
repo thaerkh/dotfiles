@@ -1,4 +1,6 @@
 *.swp
 Session.vim
-.undodir
+TAGS
 tags
+.undodir/
+.idea/
