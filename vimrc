@@ -171,7 +171,7 @@ set listchars=extends:>,precedes:<
 set nofoldenable
 set number
 set ruler
-set synmaxcol=1000
+set synmaxcol=4096
 
 " editing behaviour
 set autoindent
@@ -251,6 +251,6 @@ let g:winresizer_start_key   = "<C-n>"
 " =================
 au! BufRead * source ~/.vim/colors/ale.vim
 au! FileType * RainbowParentheses
-au! FileType markdown,gitcommit setlocal spell
+au! FileType markdown,gitcommiti,tex setlocal spell
 au! FileType javascript setlocal foldmethod=syntax
 au! QuickFixCmdPost * redraw!

@@ -18,11 +18,14 @@ git_library() {
 echo "[INFO] Installing environment requirements." >&2
 sudo apt install\
     autoconf\
+    awscli\
     git\
     inotify-tools\
+    jq\
     latexmk\
     ruby\
     pass\
+    python-pip\
     silversearcher-ag\
     tmux\
     zsh
@@ -90,6 +93,10 @@ echo "[INFO] Installing Node.js." >&2
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 sudo apt-get install nodejs
 }
+
+echo "[INFO] Installing Python dependencies."
+sudo apt install python-pip pylint
+sudo pip install docker-compose ipdb ujson
 
 echo "[INFO] Installing R." >&2
 sudo apt install libcurl4-openssl-dev libxml2-dev r-base
