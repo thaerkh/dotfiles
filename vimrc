@@ -98,7 +98,7 @@ let g:airline_theme = 'term'
 let g:EasyMotion_do_mapping = 0
 
 let g:gitgutter_map_keys = 0
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 
 let g:indentguides_ignorelist = ['text', '']
 
@@ -136,6 +136,8 @@ let g:tex_flavor = 'latex'
 let g:vim_json_syntax_conceal = 0
 
 let g:vitality_always_assume_iterm = 1
+
+let g:workspace_session_disable_on_args = 1
 
 " Settings
 " =================
@@ -233,8 +235,8 @@ nnoremap <leader>zt :tabclose<CR>
 " misc
 nnoremap [b :bprev<CR>
 nnoremap ]b :bnext<CR>
-nnoremap [c :cprev<CR>zz
-nnoremap ]c :cnext<CR>zz
+nnoremap [e :cprev<CR>zz
+nnoremap ]e :cnext<CR>zz
 nnoremap [. :lprev<CR>zz
 nnoremap ]. :lnext<CR>zz
 nnoremap [h :GitGutterPrevHunk<CR>zz
