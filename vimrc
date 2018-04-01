@@ -98,7 +98,8 @@ let g:airline_theme = 'term'
 let g:EasyMotion_do_mapping = 0
 
 let g:gitgutter_map_keys = 0
-set signcolumn=yes
+
+let g:gutentags_ctags_exclude = ["*.json"]
 
 let g:indentguides_ignorelist = ['text', '']
 
@@ -155,6 +156,7 @@ set lazyredraw
 set nocompatible
 set noswapfile
 set path+=**
+set signcolumn=yes
 set swapsync=""
 set updatetime=1000
 set wildmenu

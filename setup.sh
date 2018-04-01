@@ -88,29 +88,12 @@ go get github.com/Masterminds/glide
 cd $GOPATH/src/github.com/Masterminds/glide && make build && cd -
 eval $(grep GOPATH zshrc) && vim +GoInstallBinaries +qall
 
-echo "[INFO] Installing Node.js." >&2
-[[ $(node -v) =~ 7.5.* ]] || {
-curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
-sudo apt-get install nodejs
-}
-
 echo "[INFO] Installing Python dependencies."
 sudo apt install python-pip pylint
 sudo pip install docker-compose ipdb ujson
 
 echo "[INFO] Installing R." >&2
 sudo apt install libcurl4-openssl-dev libxml2-dev r-base
-
-echo "[INFO] Installing Ruby." >&2
-git_library https://github.com/rbenv/rbenv.git ~/.rbenv
-git_library https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-rbenv_bin='export PATH="$HOME/.rbenv/bin:$PATH"'
-grep "$rbenv_bin" ~/.zshrc &>/dev/null || echo $rbenv_bin >> ~/.zshrc
-rbenv_init='eval "$(rbenv init -)"'
-grep "$rbenv_init" ~/.zshrc &>/dev/null || echo $rbenv_init >> ~/.zshrc
-rbenv_build='export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"'
-grep "$rbenv_build" ~/.zshrc &>/dev/null || echo $rbenv_build >> ~/.zshrc
-eval $rbenv_bin && rbenv install -s 2.4.0 && rbenv global 2.4.0 && sudo gem install bundler --no-ri --no-rdoc
 
 echo "[INFO] Installing Rust." >&2
 sudo apt install cargo rustc

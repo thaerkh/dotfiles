@@ -21,9 +21,10 @@ disable r
 source ~/.antigen/antigen.zsh
 antigen use oh-my-zsh
 antigen bundle archlinux
-antigen bundle git
 antigen bundle colored-man-pages
 antigen bundle colorize
+antigen bundle git
+antigen bundle ubuntu
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen apply
 
