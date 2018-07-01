@@ -1,5 +1,6 @@
 # ~/.aliases
 
+alias ag='ag' # collision fix hack
 alias be='bundle exec'
 alias vi='vim'
 alias ts='date +%Y%m%d%H%M%S'

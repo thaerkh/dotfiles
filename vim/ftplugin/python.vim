@@ -1,6 +1,5 @@
 " Vim filetype plugin file
 
-nnoremap <F7> :call VimuxRunCommand('b <C-r>%:' . line('.'))<CR>
 nnoremap <F8> :call VimuxRunCommand("import ujson;print(ujson.dumps(<C-r>", indent=4))")<CR>
 
 let g:jedi#show_call_signatures = 0

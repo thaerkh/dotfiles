@@ -181,7 +181,7 @@ set synmaxcol=4096
 set autoindent
 set backspace=indent,eol,start
 set expandtab
-set nowrap
+set wrap
 set shiftwidth=4
 set smarttab
 set tabstop=4
@@ -194,6 +194,7 @@ nnoremap <F3> :TestFile<CR>
 nnoremap <F4> :TestLast<CR>
 nnoremap <F5> :TestSuite<CR>
 nnoremap <F6> :TestVisit<CR>
+nnoremap <F7> :call VimuxRunCommand('b <C-r>%:' . line('.'))<CR>
 
 noremap ; :
 
@@ -219,6 +220,7 @@ nnoremap <leader>d  :NERDTreeToggle<CR>
 nnoremap <leader>hp :GitGutterPreviewHunk<CR>
 nnoremap <leader>hr :GitGutterUndoHunk<CR>
 nnoremap <leader>ha :GitGutterStageHunk<CR>
+nnoremap <leader>T  :BTags<CR>
 nnoremap <leader>t  :Tags<CR>
 nnoremap <leader>s  :ToggleWorkspace<CR>
 
@@ -255,6 +257,8 @@ let g:winresizer_start_key   = "<C-n>"
 " =================
 au! BufRead * source ~/.vim/colors/ale.vim
 au! FileType * RainbowParentheses
-au! FileType markdown,gitcommiti,tex setlocal spell
+au! FileType c,cpp setlocal cinoptions=(0,w1,g0
+au! FileType markdown,gitcommit,tex setlocal spell
 au! FileType javascript setlocal foldmethod=syntax
+au! FileType qf,gitcommit setlocal nowrap
 au! QuickFixCmdPost * redraw!

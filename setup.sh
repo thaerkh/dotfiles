@@ -34,13 +34,6 @@ echo "[INFO] Copying dotfiles to home directory." >&2
 rsync -a vim/ ~/.vim
 ag -l --depth 1 | grep -v setup | xargs -i cp {} ~/.{}
 
-echo "[INFO] Installing Browserpass." >&2
-[ -d ~/.browserpass ] || {
-curl -Lo /tmp/browserpass.zip https://github.com/dannyvankooten/browserpass/releases/download/1.0.2/browserpass-linux64.zip
-unzip -o /tmp/browserpass.zip -d ~/.browserpass
-~/.browserpass/install.sh && rm /tmp/browserpass.zip
-}
-
 echo "[INFO] Configuring Git defaults." >&2
 git config --global core.excludesfile ~/.gitignore_global
 git config --global pull.rebase true
@@ -71,6 +64,19 @@ vim +"PromptlineSnapshot! /tmp/promptline.sh airline" +qall
 cat /tmp/promptline.sh >> ~/.zshrc
 vim +"TmuxlineSnapshot! /tmp/tmuxline.conf" +qall
 cat /tmp/tmuxline.conf >> ~/.tmux.conf
+
+echo "[INFO] Installing Universal Ctags." >&2
+command -v ctags || {
+git_library https://github.com/universal-ctags/ctags.git ~/.universal_ctags
+cd ~/.universal_ctags && ./autogen.sh && ./configure && make && sudo make install && cd -
+}
+
+echo "[INFO] Installing Browserpass." >&2
+[ -d ~/.browserpass ] || {
+curl -Lo /tmp/browserpass.zip https://github.com/dannyvankooten/browserpass/releases/download/1.0.2/browserpass-linux64.zip
+unzip -o /tmp/browserpass.zip -d ~/.browserpass
+~/.browserpass/install.sh && rm /tmp/browserpass.zip
+}
 
 echo "[INFO] Installing Elixir" >&2
 sudo apt install elixir
@@ -104,11 +110,5 @@ sudo apt install postgresql libpq-dev
 echo "[INFO] Installing Scala." >&2
 sudo apt install scala sbt
 cat ~/.vim/plugged/vim-scala/ctags/scala.ctags >> ~/.ctags
-
-echo "[INFO] Installing Universal Ctags." >&2
-command -v ctags || {
-git_library https://github.com/universal-ctags/ctags.git ~/.universal_ctags
-cd ~/.universal_ctags && ./autogen.sh && ./configure && make && sudo make install && cd -
-}
 
 echo "[INFO] Done!" >&2
