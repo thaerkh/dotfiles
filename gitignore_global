@@ -1,6 +1,8 @@
+*.pyc
 *.swp
 Session.vim
 TAGS
 tags
+tags.*
 .undodir/
 .idea/

@@ -99,9 +99,9 @@ let g:EasyMotion_do_mapping = 0
 
 let g:gitgutter_map_keys = 0
 
-let g:gutentags_ctags_exclude = ["*.json"]
+let g:gutentags_ctags_exclude = ["*.json", "*.pdf", ".git", ".undodir"]
 
-let g:indentguides_ignorelist = ['text', '']
+let g:indentguides_ignorelist = ['text', 'tex', 'markdown', '']
 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_ngdoc = 1
@@ -257,8 +257,9 @@ let g:winresizer_start_key   = "<C-n>"
 " =================
 au! BufRead * source ~/.vim/colors/ale.vim
 au! FileType * RainbowParentheses
-au! FileType c,cpp setlocal cinoptions=(0,w1,g0
-au! FileType markdown,gitcommit,tex setlocal spell
+au! FileType c,cpp setlocal cinoptions=(0,w1,g0,:0
+au! FileType markdown,tex,text setlocal spell
 au! FileType javascript setlocal foldmethod=syntax
-au! FileType qf,gitcommit setlocal nowrap
+au! FileType qf setlocal nowrap
+au! FileType gitcommit setlocal spell nowrap
 au! QuickFixCmdPost * redraw!
