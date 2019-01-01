@@ -5,8 +5,11 @@ alias be='bundle exec'
 alias vi='vim'
 alias ts='date +%Y%m%d%H%M%S'
 alias grbl='gaa && git commit -m "dummy commit" && grbi HEAD~~'
+alias gmbl='gc -m "aoeu" && gsta && grbi HEAD~~ && gstp'
 alias rst="Rscript -e 'summary (as.numeric (readLines (\"stdin\")))'"
 
-awkfields() {
-    head -1 $2 | awk -F "$1" '{for(i = 1; i <= NF; i++) printf(" -v " $i "=" i)}'
-}
+alias graphit='graph -T png | display'
+alias distdisplay="sort | uniq -c | awk '{print \$2, \$1}' | sort -n | graphit"
+
+awkfields() { head -1 $2 | awk -F "$1" '{for(i = 1; i <= NF; i++) printf(" -v " $i "=" i)}' }
+round() { xargs -i printf "%.$1f\n" {} }

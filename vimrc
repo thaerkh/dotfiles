@@ -99,7 +99,7 @@ let g:EasyMotion_do_mapping = 0
 
 let g:gitgutter_map_keys = 0
 
-let g:gutentags_ctags_exclude = ["*.json", "*.pdf", ".git", ".undodir"]
+let g:gutentags_ctags_exclude = ["*.json", "*.pdf", ".git", ".undodir", "*.md"]
 
 let g:indentguides_ignorelist = ['text', 'tex', 'markdown', '']
 
@@ -181,7 +181,8 @@ set synmaxcol=4096
 set autoindent
 set backspace=indent,eol,start
 set expandtab
-set wrap
+set nofixeol
+set nowrap
 set shiftwidth=4
 set smarttab
 set tabstop=4
@@ -222,19 +223,18 @@ nnoremap <leader>hr :GitGutterUndoHunk<CR>
 nnoremap <leader>ha :GitGutterStageHunk<CR>
 nnoremap <leader>T  :BTags<CR>
 nnoremap <leader>t  :Tags<CR>
+nnoremap <leader>n  :Files<CR>
 nnoremap <leader>s  :ToggleWorkspace<CR>
 
 " bottom row
+nnoremap <leader>q  :call setqflist([])<CR>
 map      <leader>j  <Plug>(easymotion-w)
 map      <leader>k  <Plug>(easymotion-b)
+nnoremap <leader>x  :bwipe<CR>
 nnoremap <leader>b  :Buffers<CR>
 nnoremap <leader>m  :Gblame<CR>
-nnoremap <leader>n  :Files<CR>
 nnoremap <leader>w  :Windows<CR>
 nnoremap <leader>v  :GV!<CR>
-nnoremap <leader>zb :b #<CR>:bd #<CR>
-nnoremap <leader>zq :call setqflist([])<CR>
-nnoremap <leader>zt :tabclose<CR>
 
 " misc
 nnoremap [b :bprev<CR>
@@ -249,6 +249,8 @@ nnoremap cp :let @+ = expand('%')<CR>
 nnoremap ga :EasyAlign<CR>
 xnoremap ga :EasyAlign<CR>
 nnoremap Q  <Nop>
+
+inoremap <C-k>  <C-o>:Snippets<CR>
 
 let g:UltiSnipsExpandTrigger = "<C-j>"
 let g:winresizer_start_key   = "<C-n>"
