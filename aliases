@@ -10,6 +10,7 @@ alias rst="Rscript -e 'summary (as.numeric (readLines (\"stdin\")))'"
 
 alias graphit='graph -T png | display'
 alias distdisplay="sort | uniq -c | awk '{print \$2, \$1}' | sort -n | graphit"
+alias cawk="awk -vFPAT='[^,]*|\"[^\"]*\"'"
 
 awkfields() { head -1 $2 | awk -F "$1" '{for(i = 1; i <= NF; i++) printf(" -v " $i "=" i)}' }
 round() { xargs -i printf "%.$1f\n" {} }

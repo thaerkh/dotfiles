@@ -48,6 +48,28 @@ echo "[INFO] Installing Zsh Antigen plugins." >&2
 git_library https://github.com/zsh-users/antigen.git ~/.antigen
 zsh -c "source ~/.zshrc"
 
+echo "[INFO] Installing Vim"
+mkdir -p ~/workspace/
+git_library https://github.com/vim/vim.git ~/workspace/vim/
+cd ~/workspace/vim
+./configure \
+    --with-features=huge \
+    --enable-multibyte \
+    --enable-rubyinterp \
+    --enable-pythoninterp \
+    --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
+    --enable-python3interp \
+    --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu \
+    --enable-perlinterp \
+    --enable-luainterp \
+    --enable-gui=gtk2 \
+    --enable-cscope \
+    --prefix=/usr/local \
+    --enable-fail-if-missing
+make -j$(grep -c processor /proc/cpuinfo) VIMRUNTIMEDIR=/usr/local/share/vim/vim81
+sudo make install
+cd -
+
 echo "[INFO] Installing Vim plugins." >&2
 vim +PlugInstall +qall
 
