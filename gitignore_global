@@ -1,8 +1,7 @@
 *.pyc
+*.retry
 *.swp
-Session.vim
-TAGS
-tags
-tags.*
+.session.vim
+.tags
+.tags.*
 .undodir/
-.idea/

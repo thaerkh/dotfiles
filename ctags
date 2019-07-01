@@ -1,7 +1,7 @@
 --recurse=yes
---exclude=tags
+--exclude=.tags
 --exclude=.git
---exclude=Session.vim
+--exclude=.session.vim
 --exclude=*.class
 --exclude=*.json
 --exclude=*.pdb

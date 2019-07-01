@@ -1,8 +1,5 @@
 # ~/.zshrc
 
-HISTSIZE=100000000
-SAVEHIST=$HISTSIZE
-
 CASE_SENSITIVE=true
 ENABLE_CORRECTION=true
 ZLE_REMOVE_SUFFIX_CHARS=""
@@ -13,23 +10,44 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 
 export PYTHONPATH=$(cat ~/.python_paths 2>/dev/null | xargs -i echo -n :{})
 export CLASSPATH="target/dependency/*:src/main/java/"
-
 export GOPATH=~/.go
 export PATH="$PATH:$GOPATH/bin"
 
-bindkey -e
-bindkey \^U backward-kill-line
-disable r
+FORGIT_NO_ALIASES=true
 
 source ~/.antigen/antigen.zsh
 antigen use oh-my-zsh
 antigen bundle archlinux
 antigen bundle colored-man-pages
 antigen bundle colorize
+antigen bundle docker
+antigen bundle docker-compose
 antigen bundle git
+antigen bundle sparsick/asciidoctor-zsh
 antigen bundle ubuntu
-antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle wfxr/forgit
+antigen bundle zdharma/fast-syntax-highlighting
+antigen bundle zdharma/zsh-diff-so-fancy
+antigen bundle zsh-users/zsh-autosuggestions
 antigen apply
 
-source ~/.aliases
+HISTSIZE=1000000
+SAVEHIST=$HISTSIZE
+
+bindkey -e
+bindkey \^U backward-kill-line
+bindkey '^[ ' autosuggest-accept
+bindkey '^[^M' autosuggest-execute
+disable r
+
+alias gai='forgit::add'
+alias gli='forgit::log'
+alias gsti='forgit::stash::show'
+alias pip='pip2'
+
+alias cawk="awk -vFPAT='[^,]*|\"[^\"]*\"'"
+alias gmbl='gc -m "aoeu" && gsta && grbi HEAD~~ && gstp'
+alias grbl='gaa && gc -m "aoeu" && grbi HEAD~~'
+alias rst="Rscript -e 'summary (as.numeric (readLines (\"stdin\")))'"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

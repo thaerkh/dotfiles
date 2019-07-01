@@ -1,0 +1,284 @@
+---
+- name: Setup Development Environment
+  hosts: localhost
+  tasks:
+    - name: Install environment requirements
+      become: yes
+      apt:
+        name:
+          - apt-transport-https
+          - asciidoctor
+          - autoconf
+          - awscli
+          - ca-certificates
+          - cargo
+          - firefox
+          - golang-glide
+          - inotify-tools
+          - iotop
+          - jq
+          - latexmk
+          - libcurl4-openssl-dev
+          - libxml2-dev
+          - net-tools
+          - pass
+          - pylint
+          - python-pip
+          - python3-pip
+          - r-base
+          - ruby
+          - rustc
+          - shellcheck
+          - silversearcher-ag
+          - tmux
+          - wireless-tools
+          - zsh
+        update_cache: yes
+
+    - name: Add Git PPA
+      become: yes
+      apt_repository:
+        repo: 'ppa:git-core/ppa'
+        state: present
+
+    - name: Install latest Git
+      become: yes
+      apt:
+        name: git
+        update_cache: yes
+        state: present
+
+    - name: Add GCP apt key
+      become: yes
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+        keyring: /usr/share/keyrings/cloud.google.gpg
+
+    - name: Add GCP repository
+      become: yes
+      apt_repository:
+        repo: 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main'
+        state: present
+        filename: /etc/apt/sources.list.d/google-cloud-sdk.list
+        update_cache: yes
+
+    - name: Install gcloud SDK
+      become: yes
+      apt:
+        name: google-cloud-sdk
+        state: present
+        update_cache: yes
+
+    - name: Add Go repository
+      become: yes
+      apt_repository:
+        repo: 'ppa:longsleep/golang-backports'
+        state: present
+
+    - name: Install Go
+      become: yes
+      apt:
+        name: golang-go
+        update_cache: yes
+        state: present
+
+    - name: Download Browsh
+      get_url:
+        url: https://github.com/browsh-org/browsh/releases/download/v1.6.4/browsh_1.6.4_linux_amd64.deb
+        dest: /tmp/browsh.deb
+
+    - name: Install Browsh
+      become: yes
+      shell: apt install /tmp/browsh.deb && rm /tmp/browsh.deb
+
+    - name: Install asciidoctor-pdf
+      become: yes
+      gem:
+        name: asciidoctor-pdf
+        pre_release: yes
+        state: latest
+
+    - name: Add Project Atomic repo
+      become: yes
+      apt_repository:
+        repo: 'ppa:projectatomic/ppa'
+        state: present
+        update_cache: yes
+
+    - name: Install OCI packages
+      become: yes
+      apt:
+        name:
+          - buildah
+          - podman
+          - skopeo
+        state: present
+        update_cache: yes
+
+    - name: Add Docker apt key
+      become: yes
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      become: yes
+      apt_repository:
+        repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'
+        state: present
+        update_cache: yes
+
+    - name: Install Docker
+      become: yes
+      apt:
+        name: docker-ce
+        update_cache: yes
+
+    - name: Add user to docker group
+      become: yes
+      user: name={{ lookup('env', 'USER') }} groups=docker append=yes
+
+    - name: Use latest pip
+      become: yes
+      pip:
+        name: pip
+        extra_args: --upgrade
+
+    - name: Use latest pip3
+      become: yes
+      pip:
+        name: pip
+        executable: pip3
+        extra_args: --upgrade
+
+    - name: Install pip requirements
+      pip:
+        name:
+          - docker-compose
+          - ipdb
+        extra_args: --user
+
+    - name: Install pip3 requirements
+      pip:
+        name:
+          - ipdb
+          - pynvim
+        executable: pip3
+        extra_args: --user
+
+    - name: Install Vim requirements
+      become: yes
+      apt:
+        name:
+          - curl
+          - git
+          - libatk1.0-dev
+          - libbonoboui2-dev
+          - libcairo2-dev
+          - libgnome2-dev
+          - libgnomeui-dev
+          - libgtk2.0-dev
+          - liblua5.1-dev
+          - libncurses5-dev
+          - libperl-dev
+          - libx11-dev
+          - libxpm-dev
+          - libxt-dev
+          - lua5.1
+          - python-dev
+          - python3-dev
+          - ruby-dev
+        update_cache: yes
+
+    - name: Get Vim
+      git:
+        repo: https://github.com/vim/vim.git
+        dest: ~/workspace/vim/
+
+    - name: Compile and install Vim
+      shell:
+        chdir: ~/workspace/vim/
+        cmd: |
+          ./configure \
+          --with-features=huge \
+          --enable-multibyte \
+          --enable-rubyinterp \
+          --enable-pythoninterp \
+          --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
+          --enable-python3interp \
+          --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu \
+          --enable-perlinterp \
+          --enable-luainterp \
+          --enable-gui=gtk2 \
+          --enable-cscope \
+          --prefix=/usr/local \
+          --enable-fail-if-missing &&
+          make -j$(grep -c processor /proc/cpuinfo) VIMRUNTIMEDIR=/usr/local/share/vim/vim81 &&
+          sudo make install
+
+    - name: Copy dotfiles to home directory
+      shell: rsync -a vim/ /home/thaer/.vim && bash -c 'ls --hide=setup.yml --hide=vim | xargs -i cp {} ~/.{}'
+
+    - name: Install Vim plugins
+      command: vim +PlugInstall +qall
+
+    - name: Install Go Binaries
+      shell: vim +GoInstallBinaries +qall
+
+    - name: Get universal-ctags
+      git:
+        repo: https://github.com/universal-ctags/ctags.git
+        dest: ~/.universal_ctags
+
+    - name: Compile and install universal-ctags
+      shell:
+        chdir: ~/.universal_ctags
+        cmd: ./autogen.sh && ./configure && make && sudo make install
+
+    - name: Get Tmux TPM
+      git:
+        repo: https://github.com/tmux-plugins/tpm.git
+        dest: ~/.tmux/plugins/tpm
+
+    - name: Install TPM plugins
+      shell: ~/.tmux/plugins/tpm/bin/install_plugins
+
+    - name: Get Zsh Antigen
+      git:
+        repo: https://github.com/zsh-users/antigen.git
+        dest: ~/.antigen
+
+    - name: Install Zsh Antigen plugins
+      shell: zsh -c "source ~/.zshrc"
+
+    - name: Set Zsh as default shell
+      become: yes
+      shell: chsh -s /bin/zsh
+
+    - name: Airline Zsh
+      shell: vim +"PromptlineSnapshot! /tmp/promptline.sh airline" +qall && cat /tmp/promptline.sh >> ~/.zshrc
+
+    - name: Airline Tmux
+      shell: vim +"TmuxlineSnapshot! /tmp/tmuxline.conf" +qall && cat /tmp/tmuxline.conf >> ~/.tmux.conf
+
+    - name: Get Powerline fonts
+      git:
+        repo: https://github.com/powerline/fonts.git
+        dest: ~/.fonts-powerline
+
+    - name: Install Powerline fonts
+      shell: ~/.fonts-powerline/install.sh
+
+    - name: Setup gnome-terminal
+      shell: |
+        dconf write "/org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color" "'rgb(18,18,18)'" &&
+        dconf write "/org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)font" "'Inconsolata for Powerline Bold 18'"
+
+    - name: Configure Git
+      shell: |
+        git config --global core.excludesfile ~/.gitignore_global  &&
+        git config --global core.pager 'diff-so-fancy | less -Ri'  &&
+        git config --global pull.rebase true  &&
+        git config --global push.default simple  &&
+        git config --global color.diff.whitespace 'yellow reverse'
