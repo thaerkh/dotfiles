@@ -2,52 +2,6 @@
 - name: Setup Development Environment
   hosts: localhost
   tasks:
-    - name: Install environment requirements
-      become: yes
-      apt:
-        name:
-          - apt-transport-https
-          - asciidoctor
-          - autoconf
-          - awscli
-          - ca-certificates
-          - cargo
-          - firefox
-          - golang-glide
-          - inotify-tools
-          - iotop
-          - jq
-          - latexmk
-          - libcurl4-openssl-dev
-          - libxml2-dev
-          - net-tools
-          - pass
-          - pylint
-          - python-pip
-          - python3-pip
-          - r-base
-          - ruby
-          - rustc
-          - shellcheck
-          - silversearcher-ag
-          - tmux
-          - wireless-tools
-          - zsh
-        update_cache: yes
-
-    - name: Add Git PPA
-      become: yes
-      apt_repository:
-        repo: 'ppa:git-core/ppa'
-        state: present
-
-    - name: Install latest Git
-      become: yes
-      apt:
-        name: git
-        update_cache: yes
-        state: present
-
     - name: Add GCP apt key
       become: yes
       apt_key:
@@ -63,56 +17,16 @@
         filename: /etc/apt/sources.list.d/google-cloud-sdk.list
         update_cache: yes
 
-    - name: Install gcloud SDK
-      become: yes
-      apt:
-        name: google-cloud-sdk
-        state: present
-        update_cache: yes
-
     - name: Add Go repository
       become: yes
       apt_repository:
         repo: 'ppa:longsleep/golang-backports'
         state: present
 
-    - name: Install Go
-      become: yes
-      apt:
-        name: golang-go
-        update_cache: yes
-        state: present
-
-    - name: Download Browsh
-      get_url:
-        url: https://github.com/browsh-org/browsh/releases/download/v1.6.4/browsh_1.6.4_linux_amd64.deb
-        dest: /tmp/browsh.deb
-
-    - name: Install Browsh
-      become: yes
-      shell: apt install /tmp/browsh.deb && rm /tmp/browsh.deb
-
-    - name: Install asciidoctor-pdf
-      become: yes
-      gem:
-        name: asciidoctor-pdf
-        pre_release: yes
-        state: latest
-
     - name: Add Project Atomic repo
       become: yes
       apt_repository:
         repo: 'ppa:projectatomic/ppa'
-        state: present
-        update_cache: yes
-
-    - name: Install OCI packages
-      become: yes
-      apt:
-        name:
-          - buildah
-          - podman
-          - skopeo
         state: present
         update_cache: yes
 
@@ -129,21 +43,96 @@
         state: present
         update_cache: yes
 
-    - name: Install Docker
+    - name: Add Kazam PPA
+      become: yes
+      apt_repository:
+        repo: 'ppa:sylvain-pineau/kazam'
+        state: present
+
+    - name: Install environment requirements
       become: yes
       apt:
-        name: docker-ce
+        name:
+          - apt-transport-https
+          - asciidoctor
+          - autoconf
+          - awscli
+          - bison
+          - buildah
+          - ca-certificates
+          - cargo
+          - cmake
+          - docker-ce
+          - firefox
+          - flex
+          - fonts-lyx
+          - git
+          - golang-glide
+          - golang-go
+          - google-cloud-sdk
+          - graphviz
+          - inotify-tools
+          - iotop
+          - jq
+          - latexmk
+          - libcairo2-dev
+          - libcurl4-openssl-dev
+          - libffi-dev
+          - libgdk-pixbuf2.0-dev
+          - libpango1.0-dev
+          - libxml2-dev
+          - net-tools
+          - pass
+          - podman
+          - pylint
+          - python3-cairo
+          - python3-pip
+          - python3-xlib
+          - r-base
+          - ruby
+          - rustc
+          - shellcheck
+          - silversearcher-ag
+          - skopeo
+          - tmux
+          - wireless-tools
+          - zsh
         update_cache: yes
+        state: present
+
+    - name: Download Browsh
+      get_url:
+        url: https://github.com/browsh-org/browsh/releases/download/v1.6.4/browsh_1.6.4_linux_amd64.deb
+        dest: /tmp/browsh.deb
+
+    - name: Install Browsh
+      become: yes
+      shell: apt install /tmp/browsh.deb && rm /tmp/browsh.deb
+
+    - name: Install asciidoctor-diagram
+      become: yes
+      gem:
+        name: asciidoctor-diagram
+        pre_release: yes
+        state: latest
+
+    - name: Install asciidoctor-pdf
+      become: yes
+      gem:
+        name: asciidoctor-pdf
+        pre_release: yes
+        state: latest
+
+    - name: Install asciidoctor-mathematical
+      become: yes
+      gem:
+        name: asciidoctor-mathematical
+        pre_release: yes
+        state: latest
 
     - name: Add user to docker group
       become: yes
       user: name={{ lookup('env', 'USER') }} groups=docker append=yes
-
-    - name: Use latest pip
-      become: yes
-      pip:
-        name: pip
-        extra_args: --upgrade
 
     - name: Use latest pip3
       become: yes
@@ -152,18 +141,19 @@
         executable: pip3
         extra_args: --upgrade
 
-    - name: Install pip requirements
-      pip:
-        name:
-          - docker-compose
-          - ipdb
-        extra_args: --user
-
     - name: Install pip3 requirements
       pip:
         name:
+          - csvkit
+          - docker-compose
+          - glances
           - ipdb
+          - numpy
+          - opencv-python
+          - pandas
           - pynvim
+          - scikit-image
+          - seaborn
         executable: pip3
         extra_args: --user
 

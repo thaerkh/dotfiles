@@ -23,7 +23,6 @@ antigen bundle colorize
 antigen bundle docker
 antigen bundle docker-compose
 antigen bundle git
-antigen bundle sparsick/asciidoctor-zsh
 antigen bundle ubuntu
 antigen bundle wfxr/forgit
 antigen bundle zdharma/fast-syntax-highlighting
@@ -43,11 +42,11 @@ disable r
 alias gai='forgit::add'
 alias gli='forgit::log'
 alias gsti='forgit::stash::show'
-alias pip='pip2'
 
+alias adocpdf='asciidoctor-pdf -r asciidoctor-diagram -r asciidoctor-mathematical'
 alias cawk="awk -vFPAT='[^,]*|\"[^\"]*\"'"
 alias gmbl='gc -m "aoeu" && gsta && grbi HEAD~~ && gstp'
 alias grbl='gaa && gc -m "aoeu" && grbi HEAD~~'
-alias rst="Rscript -e 'summary (as.numeric (readLines (\"stdin\")))'"
+alias stats="python -c 'import sys; import pandas as pd; data = pd.read_csv(sys.stdin, header=None);print(data.describe(include=\"all\"))'"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
