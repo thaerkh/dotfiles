@@ -154,6 +154,7 @@
           - pynvim
           - scikit-image
           - seaborn
+          - virtualenv
         executable: pip3
         extra_args: --user
 

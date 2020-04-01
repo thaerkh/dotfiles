@@ -17,6 +17,7 @@ FORGIT_NO_ALIASES=true
 
 source ~/.antigen/antigen.zsh
 antigen use oh-my-zsh
+antigen bundle MichaelAquilina/zsh-autoswitch-virtualenv
 antigen bundle archlinux
 antigen bundle colored-man-pages
 antigen bundle colorize
@@ -47,6 +48,6 @@ alias adocpdf='asciidoctor-pdf -r asciidoctor-diagram -r asciidoctor-mathematica
 alias cawk="awk -vFPAT='[^,]*|\"[^\"]*\"'"
 alias gmbl='gc -m "aoeu" && gsta && grbi HEAD~~ && gstp'
 alias grbl='gaa && gc -m "aoeu" && grbi HEAD~~'
-alias stats="python -c 'import sys; import pandas as pd; data = pd.read_csv(sys.stdin, header=None);print(data.describe(include=\"all\"))'"
+alias stats="python -c 'import sys; import pandas as pd; data = pd.read_csv(sys.stdin, header=None);pd.options.display.max_colwidth=-1;pd.options.display.float_format = \"{:.4f}\".format;print(data.describe(include=\"all\"))'"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
