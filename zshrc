@@ -49,5 +49,6 @@ alias cawk="awk -vFPAT='[^,]*|\"[^\"]*\"'"
 alias gmbl='gc -m "aoeu" && gsta && grbi HEAD~~ && gstp'
 alias grbl='gaa && gc -m "aoeu" && grbi HEAD~~'
 alias stats="python -c 'import sys; import pandas as pd; data = pd.read_csv(sys.stdin, header=None);pd.options.display.max_colwidth=-1;pd.options.display.float_format = \"{:.4f}\".format;print(data.describe(include=\"all\"))'"
+alias clip="tmux show-buffer | xclip -sel clip -i"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
