@@ -81,6 +81,7 @@
           - libgdk-pixbuf2.0-dev
           - libpango1.0-dev
           - libxml2-dev
+          - moreutils
           - net-tools
           - pass
           - podman
