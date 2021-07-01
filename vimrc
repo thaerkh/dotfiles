@@ -14,6 +14,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
 
 " workspace
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -28,11 +29,10 @@ Plug 'thaerkh/vim-workspace'
 Plug 'tpope/vim-apathy'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
+Plug 'hashivim/vim-terraform'
 
-" indexing
-Plug 'Shougo/deoplete.nvim'
-Plug 'davidhalter/jedi'
-Plug 'deoplete-plugins/deoplete-jedi'
+" Indexing
+Plug 'codota/tabnine-vim'
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'ludovicchabant/vim-gutentags'
@@ -75,6 +75,7 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'term'
 let g:jellybeans_overrides = {
+      \'SignColumn': {'guibg': 'NONE'},
       \'CursorLine': {'guibg': 'NONE'},
       \'DiffChange': {'guifg': 'FFFF00'},
       \'DiffAdd': {'guifg': '00FF00'},
@@ -96,8 +97,7 @@ let g:workspace_session_disable_on_args = 1
 let g:workspace_session_name = '.session.vim'
 
 " indexing
-let g:deoplete#enable_at_startup = 1
-let g:gutentags_ctags_exclude = ["*.json", "*.pdf", ".git", ".undodir", "*.md", "*.adoc"]
+let g:gutentags_ctags_exclude = ["*.json", "*.pdf", ".git", ".undodir", "*.md", "*.adoc", "*.wav", ".mp3", "*.png", "*.jpeg", "*.jpg", "*.gif"]
 let g:gutentags_ctags_tagfile = '.tags'
 let g:loaded_matchparen = 0
 
@@ -179,26 +179,28 @@ let maplocalleader = ","
 nnoremap <leader>p :let @+ = expand('%')<CR>
 nnoremap <leader>g :IndentGuidesToggle<CR>
 nnoremap <leader>c :CloseHiddenBuffers<CR>
+nnoremap <leader>r :execute 'silent !git reset ' . expand('%') \| redraw!<CR>
 
 " home row
 nnoremap <leader>a  :Ag<CR>
 xnoremap <leader>a  :EasyAlign<CR>
 nnoremap <leader>o  :execute 'Ag ' . expand('<cword>')<CR>
+nnoremap <leader>u  :MundoToggle<CR>
 nnoremap <leader>D  :NERDTreeFind<CR>
 nnoremap <leader>d  :NERDTreeToggle<CR>
-nnoremap <leader>u  :MundoToggle<CR>
 nnoremap <leader>hp :GitGutterPreviewHunk<CR>
 nnoremap <leader>hr :GitGutterUndoHunk<CR>
 nnoremap <leader>ha :GitGutterStageHunk<CR>
+nnoremap <leader>t  :Git difftool<CR>
 nnoremap <leader>n  :Files<CR>
 nnoremap <leader>s  :ToggleWorkspace<CR>
 
 " bottom row
 nnoremap <leader>q  :VimuxCloseRunner<CR>
 nnoremap <leader>b  :Buffers<CR>
-nnoremap <leader>m  :call VimuxRunCommand(' forgit::log ' . split(system('git blame ' . expand('%') . ' -L ' . line('.') . ',+1'))[0])<CR>
+nnoremap <leader>m  :Gblame<CR>
 nnoremap <leader>w  :Windows<CR>
-nnoremap <leader>v  :call VimuxRunCommand(' forgit::log ' . expand('%'))<CR>
+nnoremap <leader>v  :Glog<CR>
 
 " misc
 nnoremap [h :GitGutterPrevHunk<CR>
