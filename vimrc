@@ -15,6 +15,7 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
+Plug 'rhysd/vim-clang-format'
 
 " workspace
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -33,6 +34,7 @@ Plug 'hashivim/vim-terraform'
 
 " Indexing
 Plug 'codota/tabnine-vim'
+Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'ludovicchabant/vim-gutentags'
@@ -180,6 +182,7 @@ nnoremap <leader>p :let @+ = expand('%')<CR>
 nnoremap <leader>g :IndentGuidesToggle<CR>
 nnoremap <leader>c :CloseHiddenBuffers<CR>
 nnoremap <leader>r :execute 'silent !git reset ' . expand('%') \| redraw!<CR>
+nnoremap <leader>l :execute 'silent !git add ' . expand('%') \| redraw!<CR>
 
 " home row
 nnoremap <leader>a  :Ag<CR>
@@ -198,9 +201,9 @@ nnoremap <leader>s  :ToggleWorkspace<CR>
 " bottom row
 nnoremap <leader>q  :VimuxCloseRunner<CR>
 nnoremap <leader>b  :Buffers<CR>
-nnoremap <leader>m  :Gblame<CR>
+nnoremap <leader>m  :Git blame<CR>
 nnoremap <leader>w  :Windows<CR>
-nnoremap <leader>v  :Glog<CR>
+nnoremap <leader>v  :Gclog<CR>
 
 " misc
 nnoremap [h :GitGutterPrevHunk<CR>
@@ -214,6 +217,7 @@ let g:winresizer_start_key   = "<C-n>"
 au! BufRead * source ~/.vim/colors/ale.vim
 au! FileType * RainbowParentheses
 au! FileType c,cpp setlocal cinoptions=(0,w1,g0,:0
+au! FileType c,cpp ClangFormatAutoEnable
 au! FileType asciidoc,gitcommit,markdown,tex,text setlocal spell
 au! FileType qf nnoremap <buffer> q :call setqflist([])<CR>:q<CR>
 au! QuickFixCmdPost * redraw!
