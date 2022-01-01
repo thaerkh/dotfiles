@@ -33,8 +33,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'hashivim/vim-terraform'
 
 " Indexing
-Plug 'codota/tabnine-vim'
-Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+Plug 'tabnine/YouCompleteMe', {'do': 'python3 install.py --all'}
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'ludovicchabant/vim-gutentags'
