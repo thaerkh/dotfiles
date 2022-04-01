@@ -54,6 +54,7 @@ Plug 'sjl/vitality.vim'
 
 " languages & frameworks
 Plug 'elixir-lang/vim-elixir'
+Plug 'aklt/plantuml-syntax'
 Plug 'elzr/vim-json'
 Plug 'fatih/vim-go'
 Plug 'google/vim-jsonnet'
@@ -176,8 +177,12 @@ nnoremap <F4> :call VimuxRunCommand('b <C-r>%:' . line('.'))<CR>
 let mapleader      = " "
 let maplocalleader = ","
 
+" number row
+nnoremap <leader>] :YcmCompleter GoTo<CR>
+
 " top row
 nnoremap <leader>p :let @+ = expand('%')<CR>
+nnoremap <leader>f :ClangFormatAutoToggle<CR>
 nnoremap <leader>g :IndentGuidesToggle<CR>
 nnoremap <leader>c :CloseHiddenBuffers<CR>
 nnoremap <leader>r :execute 'silent !git reset ' . expand('%') \| redraw!<CR>
@@ -216,7 +221,6 @@ let g:winresizer_start_key   = "<C-n>"
 au! BufRead * source ~/.vim/colors/ale.vim
 au! FileType * RainbowParentheses
 au! FileType c,cpp setlocal cinoptions=(0,w1,g0,:0
-au! FileType c,cpp ClangFormatAutoEnable
 au! FileType asciidoc,gitcommit,markdown,tex,text setlocal spell
 au! FileType qf nnoremap <buffer> q :call setqflist([])<CR>:q<CR>
 au! QuickFixCmdPost * redraw!

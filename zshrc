@@ -44,6 +44,7 @@ alias gai='forgit::add'
 alias gli='forgit::log'
 alias gsti='forgit::stash::show'
 
+alias adoc='asciidoctor -D target -r asciidoctor-diagram -r asciidoctor-mathematical'
 alias adocpdf='asciidoctor-pdf -r asciidoctor-diagram -r asciidoctor-mathematical'
 alias cawk="awk -vFPAT='[^,]*|\"[^\"]*\"'"
 alias clip="tmux show-buffer | xclip -sel clip -i"

@@ -77,6 +77,8 @@
           - net-tools
           - pass
           - pylint
+          - pylint-django
+          - yaml-lint
           - python3-cairo
           - python3-pip
           - python3-xlib
