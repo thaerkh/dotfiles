@@ -1,7 +1,8 @@
 *.pyc
 *.retry
 *.swp
-.session.vim
-.tags
-.tags.*
 .undodir/
+.venv
+Session.vim
+tags
+tags.*

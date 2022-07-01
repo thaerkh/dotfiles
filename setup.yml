@@ -87,20 +87,12 @@
           - rustc
           - shellcheck
           - silversearcher-ag
+          - tig
           - tmux
           - wireless-tools
           - zsh
         update_cache: yes
         state: present
-
-    - name: Download Browsh
-      get_url:
-        url: https://github.com/browsh-org/browsh/releases/download/v1.6.4/browsh_1.6.4_linux_amd64.deb
-        dest: /tmp/browsh.deb
-
-    - name: Install Browsh
-      become: yes
-      shell: apt install /tmp/browsh.deb && rm /tmp/browsh.deb
 
     - name: Install asciidoctor-diagram
       become: yes
@@ -201,9 +193,6 @@
     - name: Install Vim plugins
       command: vim +PlugInstall +qall
 
-    - name: Install Go Binaries
-      shell: vim +GoInstallBinaries +qall
-
     - name: Get universal-ctags
       git:
         repo: https://github.com/universal-ctags/ctags.git
@@ -251,11 +240,12 @@
     - name: Setup gnome-terminal
       shell: |
         dconf write "/org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color" "'rgb(18,18,18)'" &&
-        dconf write "/org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)font" "'Inconsolata for Powerline Bold 18'"
+        dconf write "/org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)font" "'Source Code Pro for Powerline 11'"
+        dconf write "/org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)custom-command" "'bash -c \"tmux attach || tmux -2 new\"'"
 
     - name: Configure Git
       shell: |
-        git config --global core.excludesfile ~/.gitignore_global  &&
+        git config --global core.excludesfile ~/.gitignore  &&
         git config --global core.pager 'diff-so-fancy | less -Ri'  &&
         git config --global pull.rebase true  &&
         git config --global push.default simple  &&
