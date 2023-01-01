@@ -2,6 +2,12 @@
 - name: Setup Development Environment
   hosts: localhost
   tasks:
+    - name: Add Alacritty PPA
+      become: yes
+      apt_repository:
+        repo: 'ppa:aslatter/ppa'
+        state: present
+
     - name: Add GCP apt key
       become: yes
       apt_key:
@@ -46,6 +52,7 @@
       become: yes
       apt:
         name:
+          - alacritty
           - apt-transport-https
           - asciidoctor
           - autoconf
@@ -83,16 +90,19 @@
           - python3-pip
           - python3-xlib
           - r-base
+          - ripgrep
           - ruby
           - rustc
           - shellcheck
-          - silversearcher-ag
           - tig
           - tmux
           - wireless-tools
           - zsh
         update_cache: yes
         state: present
+
+    - name: Install lf
+      shell: env CGO_ENABLED=0 go install -ldflags="-s -w" github.com/gokcehan/lf@latest
 
     - name: Install asciidoctor-diagram
       become: yes
@@ -237,16 +247,15 @@
     - name: Install Powerline fonts
       shell: ~/.fonts-powerline/install.sh
 
-    - name: Setup gnome-terminal
+    - name: Configure Xterm, Use Alacritty as default
       shell: |
-        dconf write "/org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)background-color" "'rgb(18,18,18)'" &&
-        dconf write "/org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)font" "'Source Code Pro for Powerline 11'"
-        dconf write "/org/gnome/terminal/legacy/profiles:/$(dconf list /org/gnome/terminal/legacy/profiles:/)custom-command" "'bash -c \"tmux attach || tmux -2 new\"'"
+        xrdb -merge ~/.Xresources &&
+        gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'
 
     - name: Configure Git
       shell: |
         git config --global core.excludesfile ~/.gitignore  &&
-        git config --global core.pager 'diff-so-fancy | less -Ri'  &&
+        git config --global core.pager 'diff-so-fancy | less -Ri --mouse'  &&
         git config --global pull.rebase true  &&
         git config --global push.default simple  &&
         git config --global color.diff.whitespace 'yellow reverse'

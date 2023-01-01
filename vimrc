@@ -20,11 +20,11 @@ Plug 'vim-airline/vim-airline-themes'
 " workspace
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
+Plug 'benmills/vimux'
 Plug 'houtsnip/vim-emacscommandline'
 Plug 'junegunn/vim-easy-align'
 Plug 'octref/RootIgnore'
 Plug 'scrooloose/nerdtree'
-Plug 'simeji/winresizer'
 Plug 'simnalamburt/vim-mundo'
 Plug 'thaerkh/vim-workspace'
 Plug 'tpope/vim-apathy'
@@ -41,10 +41,6 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'janko-m/vim-test'
 Plug 'w0rp/ale'
 
-" tmux
-Plug 'benmills/vimux'
-Plug 'sjl/vitality.vim'
-
 " languages & frameworks
 Plug 'aklt/plantuml-syntax'
 Plug 'elixir-lang/vim-elixir'
@@ -59,6 +55,7 @@ set autoindent
 set autoread
 set backspace=indent,eol,start
 set cinoptions=(0,w1,g0,:0
+set colorcolumn=100
 set clipboard=unnamedplus
 set complete-=i
 set completeopt=longest,menuone,preview
@@ -66,7 +63,6 @@ set cursorline
 set encoding=utf-8
 set expandtab
 set foldmethod=indent
-set grepprg=ag
 set hidden
 set ignorecase
 set incsearch
@@ -75,6 +71,7 @@ set lazyredraw
 set linebreak
 set list
 set listchars=extends:>,precedes:<
+set mouse=a
 set nocompatible
 set nofixeol
 set nofoldenable
@@ -91,6 +88,8 @@ set synmaxcol=4096
 set textwidth=0
 set wildmenu
 set wildmode=list:longest,full
+
+let &grepprg='rg --smart-case --vimgrep'
 
 let NERDTreeQuitOnOpen = 1
 let NERDTreeRespectWildIgnore = 1
@@ -117,14 +116,17 @@ filetype plugin indent on
 syntax on
 colorscheme jellybeans
 
+highlight! NonText ctermbg=NONE
+highlight! LineNr ctermbg=NONE
 highlight! Normal ctermbg=NONE
+highlight! ColorColumn ctermbg=232
 highlight! SignColumn ctermbg=NONE
 highlight! CursorLine ctermbg=NONE
-highlight! ALEErrorSign ctermfg=darkred
-highlight! ALEWarningSign ctermfg=darkyellow
-highlight! GitGutterChange ctermfg=yellow
-highlight! GitGutterAdd ctermfg=green
-highlight! GitGutterDelete ctermfg=red
+highlight! ALEErrorSign ctermfg=darkred ctermbg=NONE
+highlight! ALEWarningSign ctermfg=darkyellow ctermbg=NONE
+highlight! GitGutterChange ctermfg=yellow ctermbg=NONE
+highlight! GitGutterAdd ctermfg=green ctermbg=NONE
+highlight! GitGutterDelete ctermfg=red ctermbg=NONE
 
 autocmd! FileType * RainbowParentheses
 autocmd! FileType asciidoc,gitcommit,markdown,tex,text setlocal spell
@@ -138,13 +140,14 @@ let maplocalleader = ","
 nnoremap <leader>p  :let @+ = expand('%')<CR>
 nnoremap <leader>f  :Autoformat<CR>
 nnoremap <leader>c  :CloseHiddenBuffers<CR>
+nnoremap <leader>gc :execute 'silent !git checkout ' . expand('%') \| redraw!<CR>
 nnoremap <leader>gr :execute 'silent !git reset ' . expand('%') \| redraw!<CR>
 nnoremap <leader>ga :execute 'silent !git add ' . expand('%') \| redraw!<CR>
 
 " home row
-nnoremap <leader>a  :Ag<CR>
+nnoremap <leader>a  :Rg<CR>
 xnoremap <leader>a  :EasyAlign<CR>
-nnoremap <leader>o  :execute 'Ag ' . expand('<cword>')<CR>
+nnoremap <leader>o  :execute 'Rg ' . expand('<cword>')<CR>
 nnoremap <leader>u  :MundoToggle<CR>
 nnoremap <leader>D  :NERDTreeFind<CR>
 nnoremap <leader>d  :NERDTreeToggle<CR>

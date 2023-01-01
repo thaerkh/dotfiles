@@ -7,7 +7,7 @@ ZLE_REMOVE_SUFFIX_CHARS=""
 [[ $TERM == 'xterm' ]] && export TERM='xterm-256color'
 export EDITOR='vim'
 export VIMRUNTIME=/usr/local/share/vim/vim90
-export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_COMMAND="rg --files --hidden --follow"
 
 export PYTHONPATH=$(cat ~/.python_paths 2>/dev/null | xargs -i echo -n :{})
 export CLASSPATH="target/dependency/*:src/main/java/"
@@ -43,6 +43,5 @@ alias adoc='asciidoctor -D target -r asciidoctor-diagram -r asciidoctor-mathemat
 alias adocpdf='asciidoctor-pdf -r asciidoctor-diagram -r asciidoctor-mathematical'
 alias cawk="awk -vFPAT='[^,]*|\"[^\"]*\"'"
 alias stats="python -c 'import sys; import pandas as pd; data = pd.read_csv(sys.stdin, header=None);pd.options.display.max_colwidth=-1;pd.options.display.float_format = \"{:.4f}\".format;print(data.describe(include=\"all\"))'"
-alias clip="tmux show-buffer | xclip -sel clip -i"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
