@@ -2,260 +2,72 @@
 - name: Setup Development Environment
   hosts: localhost
   tasks:
-    - name: Add Alacritty PPA
-      become: yes
-      apt_repository:
-        repo: 'ppa:aslatter/ppa'
-        state: present
-
-    - name: Add GCP apt key
-      become: yes
-      apt_key:
-        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-        state: present
-        keyring: /usr/share/keyrings/cloud.google.gpg
-
-    - name: Add GCP repository
-      become: yes
-      apt_repository:
-        repo: 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main'
-        state: present
-        filename: /etc/apt/sources.list.d/google-cloud-sdk.list
-        update_cache: yes
-
-    - name: Add Go repository
-      become: yes
-      apt_repository:
-        repo: 'ppa:longsleep/golang-backports'
-        state: present
-
-    - name: Add Docker apt key
-      become: yes
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-
-    - name: Add Docker repository
-      become: yes
-      apt_repository:
-        repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'
-        state: present
-        update_cache: yes
-
-    - name: Add Kazam PPA
-      become: yes
-      apt_repository:
-        repo: 'ppa:sylvain-pineau/kazam'
-        state: present
-
     - name: Install environment requirements
-      become: yes
-      apt:
+      become: true
+      community.general.pacman:
         name:
           - alacritty
-          - apt-transport-https
-          - asciidoctor
-          - autoconf
-          - awscli
-          - bison
-          - ca-certificates
-          - cargo
+          - bat
+          - bazel
           - cmake
-          - docker-ce
-          - firefox
-          - flex
-          - fonts-lyx
+          - docker
+          - diff-so-fancy
+          - fd
+          - fzf
           - git
-          - golang-glide
-          - golang-go
-          - google-cloud-sdk
-          - graphviz
-          - inotify-tools
-          - iotop
+          - go
           - jq
-          - latexmk
-          - libcairo2-dev
-          - libcurl4-openssl-dev
-          - libffi-dev
-          - libgdk-pixbuf2.0-dev
-          - libpango1.0-dev
-          - libxml2-dev
+          - lf
+          - man-db
           - moreutils
-          - net-tools
-          - pass
-          - pylint
-          - pylint-django
-          - yaml-lint
-          - python3-cairo
-          - python3-pip
-          - python3-xlib
-          - r-base
+          - neovim
+          - npm
+          - pipewire
+          - pipewire-pulse
+          - python-pip
+          - python-pynvim
+          - python-pyqt5
+          - python-virtualenv
           - ripgrep
           - ruby
-          - rustc
-          - shellcheck
+          - rust
+          - seahorse
+          - terraform
+          - texlive
           - tig
           - tmux
-          - wireless-tools
+          - traceroute
+          - wget
+          - xclip
+          - xterm
           - zsh
-        update_cache: yes
+        update_cache: true
         state: present
 
-    - name: Install lf
-      shell: env CGO_ENABLED=0 go install -ldflags="-s -w" github.com/gokcehan/lf@latest
+    - name: Install Yay
+      shell: "[ -d ~/Downloads/yay ] || git clone https://aur.archlinux.org/yay.git ~/Downloads/yay && cd ~/Downloads/yay && makepkg -si --noconfirm"
 
-    - name: Install asciidoctor-diagram
-      become: yes
-      gem:
-        name: asciidoctor-diagram
-        pre_release: yes
-        state: latest
-
-    - name: Install asciidoctor-pdf
-      become: yes
-      gem:
-        name: asciidoctor-pdf
-        pre_release: yes
-        state: latest
-
-    - name: Install asciidoctor-mathematical
-      become: yes
-      gem:
-        name: asciidoctor-mathematical
-        pre_release: yes
-        state: latest
-
-    - name: Add user to docker group
-      become: yes
-      user: name={{ lookup('env', 'USER') }} groups=docker append=yes
-
-    - name: Use latest pip3
-      become: yes
-      pip:
-        name: pip
-        executable: pip3
-        extra_args: --upgrade
-
-    - name: Install pip3 requirements
-      pip:
-        name:
-          - csvkit
-          - docker-compose
-          - glances
-          - ipdb
-          - numpy
-          - opencv-python
-          - pandas
-          - pynvim
-          - scikit-image
-          - seaborn
-          - virtualenv
-        executable: pip3
-        extra_args: --user
-
-    - name: Install Vim requirements
-      become: yes
-      apt:
-        name:
-          - curl
-          - git
-          - libatk1.0-dev
-          - libcairo2-dev
-          - libgtk2.0-dev
-          - liblua5.3-dev
-          - libncurses5-dev
-          - libperl-dev
-          - libx11-dev
-          - libxpm-dev
-          - libxt-dev
-          - lua5.3
-          - python3-dev
-          - ruby-dev
-        update_cache: yes
-
-    - name: Get Vim
-      git:
-        repo: https://github.com/vim/vim.git
-        dest: ~/workspace/vim/
-
-    - name: Compile and install Vim
+    - name: Install AUR packages
       shell:
-        chdir: ~/workspace/vim/
         cmd: |
-          ./configure \
-          --with-features=huge \
-          --enable-multibyte \
-          --enable-rubyinterp \
-          --enable-python3interp \
-          --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu \
-          --enable-perlinterp \
-          --enable-luainterp \
-          --enable-gui=gtk2 \
-          --enable-cscope \
-          --prefix=/usr/local \
-          --enable-fail-if-missing &&
-          sudo make -j$(grep -c processor /proc/cpuinfo) VIMRUNTIMEDIR=/usr/local/share/vim/vim81 &&
-          sudo make install
+          yay -S --noconfirm \
+            antigen \
+            noto-fonts \
+            noto-fonts-cjk \
+          && sudo rm /usr/share/fonts/noto/NotoNastaliq*
 
     - name: Copy dotfiles to home directory
-      shell: rsync -a vim/ /home/thaer/.vim && bash -c 'ls --hide=setup.yml --hide=vim | xargs -i cp {} ~/.{}'
-
-    - name: Install Vim plugins
-      command: vim +PlugInstall +qall
-
-    - name: Get universal-ctags
-      git:
-        repo: https://github.com/universal-ctags/ctags.git
-        dest: ~/.universal_ctags
-
-    - name: Compile and install universal-ctags
-      shell:
-        chdir: ~/.universal_ctags
-        cmd: ./autogen.sh && ./configure && make && sudo make install
-
-    - name: Get Tmux TPM
-      git:
-        repo: https://github.com/tmux-plugins/tpm.git
-        dest: ~/.tmux/plugins/tpm
-
-    - name: Install TPM plugins
-      shell: ~/.tmux/plugins/tpm/bin/install_plugins
-
-    - name: Get Zsh Antigen
-      git:
-        repo: https://github.com/zsh-users/antigen.git
-        dest: ~/.antigen
-
-    - name: Install Zsh Antigen plugins
-      shell: zsh -c "source ~/.zshrc"
+      shell: bash -c "ls --hide='setup*' --hide=Session.vim | xargs -i bash -c 'rsync -a {}/. ~/.{} 2>/dev/null || rsync -a {} ~/.{}'"
 
     - name: Set Zsh as default shell
-      become: yes
+      become: true
       shell: chsh -s /bin/zsh
 
+    - name: Install Vim plugins
+      command: nvim +PackerSync +qall
+
     - name: Airline Zsh
-      shell: vim +"PromptlineSnapshot! /tmp/promptline.sh airline" +qall && cat /tmp/promptline.sh >> ~/.zshrc
+      shell: nvim +"PromptlineSnapshot! /tmp/promptline.sh airline" +qall && cat /tmp/promptline.sh >> ~/.zshrc
 
     - name: Airline Tmux
-      shell: vim +"TmuxlineSnapshot! /tmp/tmuxline.conf" +qall && cat /tmp/tmuxline.conf >> ~/.tmux.conf
-
-    - name: Get Powerline fonts
-      git:
-        repo: https://github.com/powerline/fonts.git
-        dest: ~/.fonts-powerline
-
-    - name: Install Powerline fonts
-      shell: ~/.fonts-powerline/install.sh
-
-    - name: Configure Xterm, Use Alacritty as default
-      shell: |
-        xrdb -merge ~/.Xresources &&
-        gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'
-
-    - name: Configure Git
-      shell: |
-        git config --global core.excludesfile ~/.gitignore  &&
-        git config --global core.pager 'diff-so-fancy | less -Ri --mouse'  &&
-        git config --global pull.rebase true  &&
-        git config --global push.default simple  &&
-        git config --global color.diff.whitespace 'yellow reverse'
+      shell: nvim +"TmuxlineSnapshot! /tmp/tmuxline.conf" +qall && cat /tmp/tmuxline.conf >> ~/.tmux.conf

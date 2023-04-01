@@ -1,6 +1,6 @@
 XTerm.termName: xterm-256color
 XTerm*background: #000000
 XTerm*foreground: #FFFFFF
-XTerm*faceName: Source Code Pro for Powerline
-XTerm*faceSize: 11
+XTerm*faceName: Sans Mono
+XTerm*faceSize: 12
 XTerm*metaSendsEscape: true

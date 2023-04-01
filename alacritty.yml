@@ -1,62 +1,43 @@
 ---
-env:
-  TERM: xterm-256color
-
-scrolling:
-  history: 100000
-
 font:
   normal:
-    family: Source Code Pro for Powerline
+    family: Inconsolata Nerd Font
     style: Regular
-  size: 11.5
+  size: 14
 
 colors:
   primary:
-    background: '#000000'
-    foreground: '#FFFFFF'
-
+    background: "#000000"
+    foreground: "#FFFFFF"
   normal:
-    black:   '0x000000'
-    red:     '0xBF0000'
-    green:   '0x00BF00'
-    yellow:  '0xBFBF00'
-    blue:    '0x0000FF'
-    magenta: '0xBF00BF'
-    cyan:    '0x00BFBF'
-    white:   '0xFFFFFF'
-
+    black:      "#121212"
+    red:        "#C34043"
+    green:      "#5F875F"
+    yellow:     "#C0A36E"
+    blue:       "#7E9CD8"
+    magenta:    "#957FB8"
+    cyan:       "#5F8787"
+    white:      "#C5C9C5"
   bright:
-    black:   '0x7F7F7F'
-    red:     '0xFF0000'
-    green:   '0x00FF00'
-    yellow:  '0xFFFF00'
-    blue:    '0x00BFFF'
-    magenta: '0xFF00FF'
-    cyan:    '0x00FFFF'
-    white:   '0xFFFFFF'
+    black:      "#727169"
+    red:        "#E82424"
+    green:      "#98BB6C"
+    yellow:     "#E6C384"
+    blue:       "#7FB4CA"
+    magenta:    "#938AA9"
+    cyan:       "#7AA89F"
+    white:      "#DCD7BA"
+  selection:
+    background: "#C0A36E"
+    foreground: "#090618"
 
 window:
-  dimensions:
-    columns: 100
-    lines: 25
   decorations: none
-  startup_mode: Fullscreen
+  startup_mode: Maximized
 
 mouse:
   hide_when_typing: true
 
-cursor:
-  style:
-    shape: Block
-    blinking: Always
-
 shell:
   program: /bin/zsh
-  args:
-    - -l
-    - -c
-    - "tmux attach 2>/dev/null || tmux -2 new"
-
-key_bindings:
-  - {key: F11, action: ToggleFullscreen}
+  args: ["-c", "tmux -2 new -A"]

@@ -1,47 +1,39 @@
-# ~/.zshrc
+## Plugins ##
 
-CASE_SENSITIVE=true
-ENABLE_CORRECTION=true
-ZLE_REMOVE_SUFFIX_CHARS=""
-
-[[ $TERM == 'xterm' ]] && export TERM='xterm-256color'
-export EDITOR='vim'
-export VIMRUNTIME=/usr/local/share/vim/vim90
-export FZF_DEFAULT_COMMAND="rg --files --hidden --follow"
-
-export PYTHONPATH=$(cat ~/.python_paths 2>/dev/null | xargs -i echo -n :{})
-export CLASSPATH="target/dependency/*:src/main/java/"
-export GOPATH=~/.go
-export PATH="$PATH:$GOPATH/bin"
-
-source ~/.antigen/antigen.zsh
+source /usr/share/zsh/share/antigen.zsh
 antigen use oh-my-zsh
 antigen bundle MichaelAquilina/zsh-autoswitch-virtualenv
 antigen bundle archlinux
 antigen bundle colored-man-pages
-antigen bundle colorize
 antigen bundle docker
-antigen bundle docker-compose
 antigen bundle git
 antigen bundle ubuntu
-antigen bundle zdharma-continuum/fast-syntax-highlighting
-antigen bundle zdharma-continuum/zsh-diff-so-fancy --branch=main
-antigen bundle zdharma-continuum/zzcomplete
 antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
 antigen apply
 
-HISTSIZE=1000000
-SAVEHIST=$HISTSIZE
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(backward-kill-word kill-word)
 
-bindkey -e
-bindkey \^U backward-kill-line
-bindkey '^[ ' autosuggest-accept
-bindkey '^[^M' autosuggest-execute
-disable r
+## Settings ##
 
-alias adoc='asciidoctor -D target -r asciidoctor-diagram -r asciidoctor-mathematical'
-alias adocpdf='asciidoctor-pdf -r asciidoctor-diagram -r asciidoctor-mathematical'
-alias cawk="awk -vFPAT='[^,]*|\"[^\"]*\"'"
-alias stats="python -c 'import sys; import pandas as pd; data = pd.read_csv(sys.stdin, header=None);pd.options.display.max_colwidth=-1;pd.options.display.float_format = \"{:.4f}\".format;print(data.describe(include=\"all\"))'"
+export EDITOR="nvim"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# History
+export HISTSIZE=1000000
+export SAVEHIST=$HISTSIZE
+setopt HIST_SAVE_NO_DUPS
+
+# Paths
+export GOPATH=/home/$USER/.go
+export RUBYPATH=$(bundler env 2>/dev/null | grep 'User Path' | awk '{print $NF}')
+export PATH="$PATH:$GOPATH/bin:$RUBYPATH/bin"
+export RIPGREP_CONFIG_PATH="/home/$USER/.ripgreprc"
+
+# Bindings
+bindkey \^U backward-kill-line                                                                  # cursor-sensitive ctrl-u
+zstyle ":completion:*" matcher-list "m:{[:lower:]}={[:upper:][:lower:]}" "r:|=*" "l:|=* r:|=*"  # smartcase
+disable r                                                                                       # conflicts with R
+
+# FZF
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh

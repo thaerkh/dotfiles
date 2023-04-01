@@ -1,0 +1,10 @@
+[core]
+	pager = diff-so-fancy | less -Ri --mouse
+[pull]
+	rebase = true
+[push]
+	default = simple
+[color "diff"]
+	whitespace = yellow reverse
+[protocol "file"]
+	allow = always
