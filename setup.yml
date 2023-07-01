@@ -57,7 +57,7 @@
           && sudo rm /usr/share/fonts/noto/NotoNastaliq*
 
     - name: Copy dotfiles to home directory
-      shell: bash -c "ls --hide='setup*' --hide=Session.vim | xargs -i bash -c 'rsync -a {}/. ~/.{} 2>/dev/null || rsync -a {} ~/.{}'"
+      shell: bash -c "ls --hide=setup.yml | xargs -i bash -c 'rsync -a {}/. ~/.{} 2>/dev/null || rsync -a {} ~/.{}'"
 
     - name: Set Zsh as default shell
       become: true
