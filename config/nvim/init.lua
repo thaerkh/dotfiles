@@ -19,7 +19,6 @@ require("packer").startup(function(use)
   use({ "vim-airline/vim-airline", requires = { "edkolev/promptline.vim", "edkolev/tmuxline.vim" } })
   use({ "wbthomason/packer.nvim", requires = { "nvim-lua/plenary.nvim" } })
   use({ "williamboman/mason-lspconfig.nvim", requires = { "neovim/nvim-lspconfig", "williamboman/mason.nvim" } })
-  use({ "windwp/nvim-autopairs", config = [[require('nvim-autopairs').setup({})]] })
   if packer_absent then require("packer").sync() end
 end)
 
@@ -36,7 +35,7 @@ cmp.setup({
   mapping = {
     ["<C-p>"] = cmp.mapping.select_prev_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    ["<Tab>"] = cmp.mapping.confirm({ select = true }),
   },
   formatting = { format = require("lspkind").cmp_format({ format = "symbol_text", maxwidth = 64, ellipsis_char = "..." }) },
   sources = cmp.config.sources({ { name = "nvim_lsp" }, { name = "luasnip" } }, { { name = "nvim_lsp_signature_help" } }),
