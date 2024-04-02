@@ -19,7 +19,6 @@ export EDITOR="nvim"
 # History
 export HISTSIZE=1000000
 export SAVEHIST=$HISTSIZE
-setopt HIST_SAVE_NO_DUPS
 
 # Paths
 export GOPATH=/home/$USER/.go
