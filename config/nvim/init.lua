@@ -8,7 +8,7 @@ end
 require("packer").startup(function(use)
   use({ "hrsh7th/nvim-cmp", requires = { "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-nvim-lsp-signature-help", "onsails/lspkind.nvim" } })
   use({ "ibhagwan/fzf-lua", requires = { "junegunn/fzf", run = "./install --bin" } })
-  use({ "jay-babu/mason-null-ls.nvim", requires = { "jose-elias-alvarez/null-ls.nvim", "williamboman/mason.nvim" } })
+  use({ "jay-babu/mason-null-ls.nvim", requires = { "nvimtools/none-ls.nvim", "williamboman/mason.nvim" } })
   use({ "lewis6991/gitsigns.nvim", config = [[require('gitsigns').setup({current_line_blame_opts={delay=0}})]] })
   use({ "nvim-tree/nvim-tree.lua", requires = { "nvim-tree/nvim-web-devicons" }, config = [[require('nvim-tree').setup({})]] })
   use({ "nvim-treesitter/nvim-treesitter", tag = "*", run = ":TSUpdate" })
@@ -64,6 +64,7 @@ require("kanagawa").setup({
 vim.o.clipboard = "unnamedplus"
 vim.o.cursorline = true
 vim.o.number = true
+vim.o.matchpairs = vim.o.matchpairs .. ",<:>"
 
 -- Autosave
 vim.o.swapfile = false
@@ -78,7 +79,7 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>a", require("fzf-lua").lsp_finder)
 vim.keymap.set("n", "<leader>o", require("fzf-lua").grep)
 vim.keymap.set("n", "<leader>e", require("fzf-lua").grep_cword)
-vim.keymap.set("n", "<leader>u", function() vim.fn.setreg("+", vim.fn.expand("%")) end)
+vim.keymap.set("n", "<leader>u", function() require("gitsigns").setqflist("all") end)
 vim.keymap.set("n", "<leader>i", function() require("gitsigns").blame_line({ full = true }) end)
 vim.keymap.set("n", "<leader>d", function() require("nvim-tree.api").tree.toggle({ find_file = true, update_root = true }) end)
 vim.keymap.set("n", "<leader>hs", require("gitsigns").stage_hunk)
@@ -87,12 +88,10 @@ vim.keymap.set("n", "<leader>hu", require("gitsigns").undo_stage_hunk)
 vim.keymap.set("n", "<leader>hp", require("gitsigns").preview_hunk)
 vim.keymap.set("n", "<leader>t", require("fzf-lua").files)
 vim.keymap.set("n", "<leader>n", require("fzf-lua").buffers)
-vim.keymap.set("n", "<leader>s", function() require("gitsigns").setqflist("all") end)
-
--- Local Leader Mappings
-vim.g.maplocalleader = ","
-vim.keymap.set("n", "<localleader>a", vim.lsp.buf.format)
-vim.keymap.set("n", "<localleader>e", vim.lsp.buf.rename)
-vim.keymap.set("n", "<localleader>u", require("fzf-lua").lsp_code_actions)
-vim.keymap.set("n", "<localleader>i", vim.lsp.buf.hover)
-vim.keymap.set("n", "<localleader>d", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>s", function() vim.fn.setreg("+", vim.fn.expand("%")) end)
+vim.keymap.set("n", "<leader>p", function() vim.cmd(":cclose") end)
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>g", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>c", require("fzf-lua").lsp_code_actions)
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
+vim.keymap.set("n", "<leader>l", vim.lsp.buf.hover)
