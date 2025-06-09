@@ -40,6 +40,8 @@ startup_mode = "Maximized"
 [mouse]
 hide_when_typing = true
 
-[shell]
+[terminal]
+
+[terminal.shell]
 program = "/bin/zsh"
 args = ["-c", "tmux -2 new -s0 -A"]

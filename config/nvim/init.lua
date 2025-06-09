@@ -17,6 +17,7 @@ require("packer").startup(function(use)
   use({ "vim-airline/vim-airline", requires = { "edkolev/promptline.vim", "edkolev/tmuxline.vim" } })
   use({ "wbthomason/packer.nvim", requires = { "nvim-lua/plenary.nvim" } })
   use({ "williamboman/mason-lspconfig.nvim", requires = { "neovim/nvim-lspconfig", "williamboman/mason.nvim" } })
+  use { 'nvim-flutter/flutter-tools.nvim', requires = { 'nvim-lua/plenary.nvim', 'stevearc/dressing.nvim' } }
   if packer_absent then require("packer").sync() end
 end)
 
@@ -95,3 +96,4 @@ vim.keymap.set("n", "<leader>g", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>c", require("fzf-lua").lsp_code_actions)
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.keymap.set("n", "<leader>l", vim.lsp.buf.hover)
+vim.keymap.set("n", "<leader>w", function() vim.cmd('set wrapscan!') end)

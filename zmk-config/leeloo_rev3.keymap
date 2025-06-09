@@ -36,10 +36,10 @@ nice_view_spi: &spi0 { cs-gpios = <&pro_micro 4 GPIO_ACTIVE_HIGH>; };
 
         layer_1 {
             bindings = <
-&soft_off        &rgb_ug RGB_EFF  &rgb_ug RGB_EFR  &rgb_ug RGB_SPI  &rgb_ug RGB_SPD  &bootloader                       &bootloader     &rgb_ug RGB_HUI  &rgb_ug RGB_HUD  &rgb_ug RGB_SAI  &rgb_ug RGB_SAD  &out OUT_TOG
-&rgb_ug RGB_BRI  &kp C_PREV       &kp C_PLAY       &kp C_STOP       &kp C_NEXT       &kp C_VOL_UP                      &kp C_BRI_UP    &kp F1           &kp F2           &kp F3           &kp F4           &bt BT_NXT
-&rgb_ug RGB_BRD  &kp LEFT         &kp UP           &kp DOWN         &kp RIGHT        &kp C_VOL_DN                      &kp C_BRI_DN    &kp F5           &kp F6           &kp F7           &kp F8           &bt BT_PRV
-&rgb_ug RGB_TOG  &kp HOME         &kp PG_UP        &kp PG_DN        &kp END          &kp C_MUTE    &kp DEL  &kp PSCRN  &kp C_BRI_AUTO  &kp F9           &kp F10          &kp F11          &kp F12          &bt BT_CLR
+&soft_off        &rgb_ug RGB_EFR  &rgb_ug RGB_EFF  &rgb_ug RGB_SPD  &rgb_ug RGB_SPI  &bootloader                       &bootloader     &rgb_ug RGB_HUI  &rgb_ug RGB_HUD  &rgb_ug RGB_SAI  &rgb_ug RGB_SAD  &out OUT_TOG
+&rgb_ug RGB_TOG  &kp C_PREV       &kp C_PLAY       &kp C_STOP       &kp C_NEXT       &kp C_MUTE                        &kp C_BRI_AUTO  &kp F1           &kp F2           &kp F3           &kp F4           &bt BT_CLR
+&rgb_ug RGB_BRI  &kp LEFT         &kp UP           &kp DOWN         &kp RIGHT        &kp C_VOL_UP                      &kp C_BRI_UP    &kp F5           &kp F6           &kp F7           &kp F8           &bt BT_NXT
+&rgb_ug RGB_BRD  &kp HOME         &kp PG_UP        &kp PG_DN        &kp END          &kp C_VOL_DN  &kp DEL  &kp PSCRN  &kp C_BRI_DN    &kp F9           &kp F10          &kp F11          &kp F12          &bt BT_PRV
                                                    &trans           &trans           &trans        &trans   &trans     &trans          &trans           &trans
             >;
         };
